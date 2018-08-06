@@ -1,0 +1,5 @@
+Ankit	22	Male	1.4	60
+Praful	22	Male	1.7	54
+Manjunath	22	Male	1.6	50
+Monodeep	23	Male	1.55	95
+Geetika	25	Female	1.46	63

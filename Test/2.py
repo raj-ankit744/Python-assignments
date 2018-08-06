@@ -1,60 +1,39 @@
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jul 30 15:19:37 2018
+Created on Mon Aug  6 15:37:16 2018
 
 @author: user
 """
-import operator
-n = []
-for i in range(10):
-    n.append(input("Enter name marks1 marks2 marks3").split())
-for i in range(10):
-    print(n[i][0]+ " "+ n[i][1] + " " + n[i][2] + " " + n[i][3])
-    
-s1 = []
-s2 = []
-s3 = []
-    
-for i in range(10):
-    s1.append(int(n[i][1]))
-    s2.append(int(n[i][2]))
-    s3.append(int(n[i][3]))
-s1.sort()
-s2.sort()
-s3.sort()
 
-print("Subjectwise mean : ", sum(s1)/10, sum(s2)/10, sum(s3)/10)
-print("Subjectwise median: ",(s1[4] + s1[5])/2, (s2[4] + s2[5])/2, (s3[4] + s3[5])/2)
-print("Sub1")
-for i in range(10):
-    print(s1[i])
-print("Sub2")
-for i in range(10):
-    print(s2[i])
-print("Sub3")
-for i in range(10):
-    print(s3[i])
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("C:/Users/user/Desktop/ARG/Test/camera.csv")
+col = df.columns.tolist()
+print("The names of the columns are\n",col)
+d1 = df.iloc[0,:].tolist()
+print()
+print('Data types:\n')
+print(tuple(zip(d1,col)))
+print('\n\n')
 
-st = []
-for i in range(10):
-    st.append((int(n[i][1]) + int(n[i][2]) + int(n[i][3]),n[i][0]))
-st.sort(reverse=True)
-print("Top 3 students : ")
-print(st[0])
-print(st[1])
-print(st[2])
+for i in range(1,26):
+    print("{:3} {:30}{:30}{:30}".format(i,df['Model'].iloc[i],df['Release date'].iloc[i],df['Price'].iloc[i]))
+print("Summary of whole dataset")
+d = df.iloc[1:,2:].astype(float)
+print(df.iloc[1:,0].describe())
+print(d.describe())
+print('\n\n')
+print("Summary of price ")
+pr = df['Price'].iloc[1:].astype(float)
+print(pr.describe())
+print()
+index = pd.DatetimeIndex(df['Release date'].iloc[1:].tolist())
+#dx = pd.DataFrame(d,index=index)
+#dx = pd.DataFrame(d.loc[d['Price'] > 1000]['Price'].tolist())
+#print(dx)
+plt.scatter(index,d['Price'])
+plt.xlabel('Time')
+plt.ylabel('Price')
+plt.show()
 
-for i in range(10):
-    if st[i][0]/3 > 90:
-        print(st[i][1] + ":A+")
-    elif st[i][0]/3 > 80:
-        print(st[i][1] + ":A")
-    elif st[i][0]/3 > 70:
-        print(st[i][1] + ":B+")
-    elif st[i][0]/3 > 60:
-        print(st[i][1] + ":B")
-    elif st[i][0]/3 > 50:
-        print(st[i][1] + ":C")
-    else:
-        print(st[i][1] + ":D")
-        
+
